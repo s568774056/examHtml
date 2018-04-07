@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>home</title>
+
+		<!-- BOOTSTRAP STYLES-->
+		<link href="assets/css/bootstrap.css" rel="stylesheet" />
+		<!-- FONTAWESOME STYLES-->
+		<link href="assets/css/font-awesome.css" rel="stylesheet" />
+		<!--CUSTOM BASIC STYLES-->
+		<link href="assets/css/basic.css" rel="stylesheet" />
+		<!--CUSTOM MAIN STYLES-->
+		<link href="assets/css/custom.css" rel="stylesheet" />
+		<!-- GOOGLE FONTS-->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+					<a class="navbar-brand" href="index.html">COMPANY NAME</a>
+				</div>
+
+				<div class="header-right">
+
+					<a href="message-task.html" class="btn btn-info" title="New Message"><b>30 </b><i class="fa fa-envelope-o fa-2x"></i></a>
+					<a href="message-task.html" class="btn btn-primary" title="New Task"><b>40 </b><i class="fa fa-bars fa-2x"></i></a>
+					<a href="login.html" class="btn btn-danger" title="Logout"><i class="fa fa-exclamation-circle fa-2x"></i></a>
+
+				</div>
+			</nav>
+			<!-- /. NAV TOP  -->
+			<nav class="navbar-default navbar-side" role="navigation">
+				<div class="sidebar-collapse">
+					<ul class="nav" id="main-menu">
+						<li>
+							<div class="user-img-div">
+								<img src="assets/img/user.png" class="img-thumbnail" />
+
+								<div class="inner-text">
+									Jhon Deo Alex
+									<br />
+									<small>Last Login : 2 Weeks Ago </small>
+								</div>
+							</div>
+
+						</li>
+
+						<li>
+							<a class="active-menu" href="index.html"><i class="fa fa-dashboard "></i>Dashboard</a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-desktop "></i>考试管理<span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a name="subject" href="#"><i class="fa fa-toggle-on"></i>科目管理</a>
+								</li>
+								<li>
+									<a href="#" name="topic"><i class="fa fa-bell "></i>试题管理</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-circle-o "></i>试卷管理</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-code "></i>Buttons</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-yelp "></i>Extra Pages <span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="#"><i class="fa fa-coffee"></i>Invoice</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-flash "></i>Pricing</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-key "></i>Components</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-flash "></i>Data Tables </a>
+
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-bicycle "></i>Forms <span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+
+								<li>
+									<a href="#"><i class="fa fa-desktop "></i>Basic </a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-code "></i>Advance</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a href="gallery.html"><i class="fa fa-anchor "></i>Gallery</a>
+						</li>
+						<li>
+							<a href="error.html"><i class="fa fa-bug "></i>Error Page</a>
+						</li>
+						<li>
+							<a href="login.html"><i class="fa fa-sign-in "></i>Login Page</a>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-sitemap "></i>Multilevel Link <span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="#"><i class="fa fa-bicycle "></i>Second Level Link</a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-flask "></i>Second Level Link</a>
+								</li>
+								<li>
+									<a href="#">Second Level Link<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li>
+											<a href="#"><i class="fa fa-plus "></i>Third Level Link</a>
+										</li>
+										<li>
+											<a href="#"><i class="fa fa-comments-o "></i>Third Level Link</a>
+										</li>
+
+									</ul>
+
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a name="api" href="#"><i class="fa fa-square-o "></i>Api接口地址</a>
+						</li>
+					</ul>
+
+				</div>
+
+			</nav>
+			<!-- /. NAV SIDE  -->
+			<div id="page-wrapper">
+				<div id="page-inner">
+					<iframe name="body_iframe"   src="" frameborder="0" scrolling="no" id="body_iframe" onload="this.height=800" style="width: 100%;"></iframe>
+				<!--	<script type="text/javascript">
+						function reinitIframe() {
+							var iframe = document.getElementById("body_iframe");
+							try {
+								var bHeight = iframe.contentWindow.document.body.scrollHeight;
+								var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+								var height = Math.max(bHeight, dHeight);
+								iframe.height = height;
+							} catch(ex) {}
+						}
+						window.setInterval("reinitIframe()", 200);
+					</script>-->
+				</div>
+			</div>
+			<!-- /. PAGE WRAPPER  -->
+		</div>
+		<!-- /. WRAPPER  -->
+
+		<div id="footer-sec">
+			Copyright &copy; 2016.Company name All rights reserved.More Templates
+		</div>
+		<!-- /. FOOTER  -->
+		<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+		<!-- JQUERY SCRIPTS -->
+		<script src="assets/js/jquery-1.10.2.js"></script>
+		<!-- BOOTSTRAP SCRIPTS -->
+		<script src="assets/js/bootstrap.js"></script>
+		<!-- METISMENU SCRIPTS -->
+		<script src="assets/js/jquery.metisMenu.js"></script>
+		<!-- CUSTOM SCRIPTS -->
+		<script src="assets/js/custom.js"></script>
+		<script src="backstage/js/index.js"></script>
+	</body>
+</html>

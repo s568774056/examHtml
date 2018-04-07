@@ -1,0 +1,12 @@
+/**
+ * 基本css 【分页，表格会用到】
+ */
+table th a{
+	float: right;text-decoration:none;
+}
+tbody button{
+	margin-left: 3px;
+	margin-right: 3px;
+}
+table td,th{
+vertical-align:middle !important;}
