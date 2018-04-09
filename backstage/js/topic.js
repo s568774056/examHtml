@@ -2,9 +2,9 @@ var update_id = '';
 var deleteId = '';
 $(document).ready(function() {
 	var myPlugin = $('#subject_table').myPlugin({
-		'title_name': 'Id,科目名称,说明', //th第一行的表头名称
-		'column_name': 'id,name,detailed', //字段名
-		'url': '/subject/select',
+		'title_name': 'Id,题目名称,题目类型,选项A,选项B,选项C,选项D,选项E,选项F', //th第一行的表头名称
+		'column_name': 'id,name,type,optionA,optionB,optionC,optionD,optionE,optionF', //字段名
+		'url': '/topic/select',
 		'modalId': 'myModal',
 		'data': {
 			page: 0,
@@ -58,7 +58,7 @@ $(document).ready(function() {
 	$('#deleteModal button:last-child').on('click', function() {
 		$.ajax({
 			type: "POST",
-			url: baseurl + "/subject/delete/" + deleteId,
+			url: baseurl + "/topic/delete/" + deleteId,
 			data: '',
 			dataType: "json",
 			success: function(result) {
@@ -82,9 +82,9 @@ $(document).ready(function() {
 			var $form = $(e.target);
 			var post_url = '';
 			if(myPlugin.options.action == 'insert') {
-				post_url = '/subject/add';
+				post_url = '/topic/add';
 			} else {
-				post_url = '/subject/update/' + update_id;
+				post_url = '/topic/update/' + update_id;
 			}
 			$.ajax({
 				type: "POST",
@@ -106,7 +106,7 @@ $(document).ready(function() {
 		});
 	$('.seach button').on('click', function() {
       myPlugin.updateParamData({
-      	name:$("#subject_name").val()
+      	name:$("#topic_name").val(),type:$("#topic_type").val()
 		});
 	});
 });
