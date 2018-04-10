@@ -77,11 +77,13 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">题目类型：</label>
 								<div class="col-sm-10">
-									<select class="form-control">
-									  <option>单选</option>
-									  <option>多选</option>
-									</select>
-								</div>
+									<label class="radio-inline" style="padding-left: 20px;">
+									  <input type="radio" name="type" id="inlineRadio1" value="0" checked> 单选
+									</label>
+									<label class="radio-inline" style="padding-left: 20px;">
+									  <input type="radio" name="type" id="inlineRadio2" value="1"> 多选
+									</label>
+																	</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">选项A：</label>
@@ -89,34 +91,34 @@
 									<input type="text" class="form-control" name="optionA">
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group">	
 								<label class="col-sm-2 control-label">选项B：</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="optionB">
+									<input type="text" class="form-control disabled" name="optionB" disabled>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">选项C：</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="optionC">
+									<input type="text" class="form-control disabled" name="optionC" disabled>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">选项D：</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="optionD">
+									<input type="text" class="form-control disabled" name="optionD" disabled>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">选项E：</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="optionE">
+									<input type="text" class="form-control disabled" name="optionE" disabled>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">选项F：</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="optionF">
+									<input type="text" class="form-control disabled" name="optionF" disabled>
 								</div>
 							</div>
 
@@ -162,6 +164,105 @@
 			</div>
 			<!-- /.modal -->
 		</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#defaultForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                enabled: true,
+                validators: {
+                    notEmpty: {
+                        message: 'The street is required and cannot be empty'
+                    }
+                }
+            },
+            type: {
+                enabled: true,
+                validators: {
+                    notEmpty: {
+                        message: 'The city is required and cannot be empty'
+                    }
+                }
+            },
+            optionA: {
+                enabled: true,
+                validators: {
+                    notEmpty: {
+                        message: 'The country is required and cannot be empty'
+                    }
+                }
+            },
+            optionB: {
+                enabled: false,
+                validators: {
+                    notEmpty: {
+                        message: 'The state is required and cannot be empty'
+                    }
+                }
+            },
+            optionC: {
+                enabled: false,
+                validators: {
+                    notEmpty: {
+                        message: 'The state is required and cannot be empty'
+                    }
+                }
+            },
+            optionD: {
+                enabled: false,
+                validators: {
+                    notEmpty: {
+                        message: 'The state is required and cannot be empty'
+                    }
+                }
+            },
+            optionE: {
+                enabled: false,
+                validators: {
+                    notEmpty: {
+                        message: 'The state is required and cannot be empty'
+                    }
+                }
+            },
+            optionF: {
+                enabled: false,
+                validators: {
+                    notEmpty: {
+                        message: 'The state is required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+
+    // Enable street/city/country validators if user want to ship to other address
+    $('input[name="type"]').on('change', function() {
+        var bootstrapValidator = $('#defaultForm').data('bootstrapValidator'),
+            shipNewAddress     = ($(this).val() == '1');//如果是多选
+
+        shipNewAddress ? $('#defaultForm').find('.disabled').removeAttr('disabled')
+                       : $('#defaultForm').find('.disabled').attr('disabled', 'disabled');
+ 
+        bootstrapValidator.enableFieldValidators('optionB', shipNewAddress)
+                          .enableFieldValidators('optionC', shipNewAddress)
+                          .enableFieldValidators('optionD', shipNewAddress)
+                          .enableFieldValidators('optionE', shipNewAddress)
+                          .enableFieldValidators('optionF', shipNewAddress);
+    });
+
+    /*$('select[name="country"]').on('change', function() {
+        var bootstrapValidator = $('#checkoutForm').data('bootstrapValidator');
+        bootstrapValidator.enableFieldValidators('state', $(this).val() == 'US');
+    });*/
+});
+</script>
 	</body>
 
 </html>
