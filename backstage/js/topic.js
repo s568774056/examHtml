@@ -1,9 +1,10 @@
 var update_id = '';
 var deleteId = '';
 $(document).ready(function() {
+	getSubject();
 	var myPlugin = $('#subject_table').myPlugin({
 		'title_name': 'Id,题目名称,题目类型,选项A,选项B,选项C,选项D,选项E,选项F', //th第一行的表头名称
-		'column_name': 'id,name,type,optionA,optionB,optionC,optionD,optionE,optionF', //字段名
+		'column_name': 'id,name,typeToStringFun,optionA,optionB,optionC,optionD,optionE,optionF', //字段名
 		'url': '/topic/select',
 		'modalId': 'myModal',
 		'data': {
@@ -11,40 +12,43 @@ $(document).ready(function() {
 			size: 3
 		}, //请求参数
 	});
-
-	$('#defaultForm').bootstrapValidator({
-		//        live: 'disabled',
-		message: 'This value is not valid',
-		feedbackIcons: {
-			valid: 'glyphicon glyphicon-ok',
-			invalid: 'glyphicon glyphicon-remove',
-			validating: 'glyphicon glyphicon-refresh'
-		},
-		fields: {
-			name: {
-				message: 'The username is not valid',
-				validators: {
-					notEmpty: {
-						message: '科目名称不能为空'
-					}
-				}
-			},
-			detailed: {
-				message: 'The username is not valid',
-				validators: {
-				}
-			}
+    $('#addTb').removeAttr("data-target");
+	$('#addTb').on('click', function(event) {
+		if($("#subject_type").val()==""){
+			showMessage("请选择科目");
+			return;
 		}
+		$("#defaultForm")[0].reset();
+		$("#inlineRadio1").attr("checked", "checked");
+		$("#inlineRadio2").removeAttr("checked");$('#myModal').modal("show");
 	});
 
 	//修改
 	$('#subject_table table').on('click', 'tr button:first-child', function() {
 
-		$('#defaultForm').data('bootstrapValidator').resetForm(true); //初始化From
+		$("#defaultForm")[0].reset();
 		var tr = $(this).parents('tr');
 		update_id = $(tr).children().eq(0).html();
-		$("#defaultForm input[name='name']").val($(tr).children().eq(1).html());
-		$("#defaultForm textarea[name='detailed']").val($(tr).children().eq(2).html());
+
+		if($(tr).children().eq(2).html() == "多选") {
+			changeDisabled(false);
+			$("#inlineRadio2").attr("checked", "checked");
+			$("#inlineRadio1").removeAttr("checked");
+			$("#defaultForm input[name='type']").val("1");
+		} else {
+			changeDisabled(true);
+			$("#inlineRadio1").attr("checked", "checked");
+			$("#inlineRadio2").removeAttr("checked");
+			$("#defaultForm input[name='type']").val("0");
+		}
+		$("#defaultForm textarea[name='name']").val($(tr).children().eq(1).html());
+
+		$("#defaultForm input[name='optionA']").val($(tr).children().eq(3).html());
+		$("#defaultForm input[name='optionB']").val($(tr).children().eq(4).html());
+		$("#defaultForm input[name='optionC']").val($(tr).children().eq(5).html());
+		$("#defaultForm input[name='optionD']").val($(tr).children().eq(6).html());
+		$("#defaultForm input[name='optionE']").val($(tr).children().eq(7).html());
+		$("#defaultForm input[name='optionF']").val($(tr).children().eq(8).html());
 	});
 	//删除
 	$('#subject_table table').on('click', 'tr button:last-child', function() {
@@ -75,41 +79,62 @@ $(document).ready(function() {
 	});
 
 	//添加/修改
-	$('#defaultForm').bootstrapValidator('validate')
-		.on('success.form.bv', function(e) {
-			// Prevent form submission
-			e.preventDefault();
-			var $form = $(e.target);
-			var post_url = '';
-			if(myPlugin.options.action == 'insert') {
-				post_url = '/topic/add';
-			} else {
-				post_url = '/topic/update/' + update_id;
-			}
-			$.ajax({
-				type: "POST",
-				url: baseurl + post_url,
-				data: $form.serialize() + "&id=" + update_id,
-				dataType: "json",
-				success: function(result) {
-					console.log('[result]:' + result);
-					if(result.code == 0) {
-						showMessage('修改成功');
-						myPlugin.getData();
-						$('#myModal').modal('hide');
-					} else {
-						showMessage('修改失败:' + result.msg);
-					}
-					$('#defaultForm').data('bootstrapValidator').resetForm(true);
+	$('#myModal button[class="btn btn-primary submit"]').on('click', function() {
+		// Prevent form submission
+		var post_url = '';
+		if(myPlugin.options.action == 'insert') {
+			post_url = '/topic/add';
+		} else {
+			post_url = '/topic/update/' + update_id;
+		}
+		$.ajax({
+			type: "POST",
+			url: baseurl + post_url,
+			data: $("#defaultForm").serialize() + "&subjectId=" + $("#subject_type").val() + "&id=" + update_id,
+			dataType: "json",
+			success: function(result) {
+				if(result.code == 0) {
+					showMessage('操作成功');
+					myPlugin.getData();
+					$('#myModal').modal('hide');
+					$("#defaultForm")[0].reset();
+					changeDisabled(true);
+				} else {
+					showMessage('操作失败:' + result.msg);
 				}
-			});
-		});
-	$('.seach button').on('click', function() {
-      myPlugin.updateParamData({
-      	name:$("#topic_name").val(),type:$("#topic_type").val()
+			},
+			error: function(result) {
+				$.each(result, function(key, val) {
+					console.log("error  " + key + "  " + val);
+				});
+				changeDisabled(true);
+			}
 		});
 	});
+	$('.seach button').on('click', function() {
+		myPlugin.updateParamData({
+			name: $("#topic_name").val(),
+			type: $("#topic_type").val(),
+			subjectId: $("#subject_type").val()
+		});
+	});
+	$('input[name="type"]').on('change', function() {
+
+		var disabled = $(this).attr("id"); //如果是多选
+
+		disabled == "inlineRadio1" ? (disabled = true) : (disabled = false);
+		changeDisabled(disabled);
+	});
 });
+
+function changeDisabled(disabled) {
+
+	$("input[name='optionB']").attr('disabled', disabled);
+	$("input[name='optionC']").attr('disabled', disabled);
+	$("input[name='optionD']").attr('disabled', disabled);
+	$("input[name='optionE']").attr('disabled', disabled);
+	$("input[name='optionF']").attr('disabled', disabled);
+}
 
 function showMessage(msg) {
 	$("#message button").html('操作成功');
@@ -118,4 +143,29 @@ function showMessage(msg) {
 	}
 	$("#message").fadeToggle(1000);
 	$("#message").fadeToggle(1000);
+}
+
+function typeToStringFun(obj) {
+	if(obj['type'] == "0") {
+		return '单选';
+	} else {
+		return '多选';
+	}
+}
+
+function getSubject(){
+		$.ajax({
+			type: "POST",
+			url: baseurl + "/subject/findAll",
+			data: "",
+			dataType: "json",
+			success: function(result) {
+				$(result.data).each(function(index, element) {
+					
+					$("#subject_type").append("<option value='"+element["id"]+"'>"+element["name"]+"</option>");
+				});
+			},
+			error: function(result) {
+			}
+		});
 }

@@ -50,7 +50,7 @@ $(document).ready(function() {
 	$('#subject_table table').on('click', 'tr button:last-child', function() {
 		$('#deleteModal').modal('show');
 		var tr = $(this).parents('tr');
-		$('#deleteModal .modal-body em').html("【" + $(tr).children().eq(1).html() + "】");
+		$('#deleteModal .modal-body em').html("【" + $(tr).children().eq(1).html() + "及下属全部试题】");
 		deleteId = $(tr).children().eq(0).html();
 	});
 

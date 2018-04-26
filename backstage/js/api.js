@@ -97,11 +97,11 @@ $(document).ready(function() {
 				success: function(result) {
 					console.log('[result]:' + result);
 					if(result.code == 0) {
-						showMessage('修改成功');
+						showMessage('操作成功');
 						myPlugin.getData();
 						$('#myModal').modal('hide');
 					} else {
-						showMessage('修改失败:' + result.msg);
+						showMessage('操作失败:' + result.msg);
 					}
 					$('#defaultForm').data('bootstrapValidator').resetForm(true);
 				}

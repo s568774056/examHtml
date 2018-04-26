@@ -10,7 +10,6 @@
 		<link href="backstage/bootstrap/css/bootstrapValidator.css" rel="stylesheet" />
 		<script src="backstage/js/jquery.min.js"></script>
 		<script src="backstage/bootstrap/js/bootstrap.js"></script>
-		<script src="backstage/bootstrap/js/bootstrapValidator.js"></script>
 		<script src="backstage/js/base.js"></script>
 		<!-- BASE STYLES END-->
 		<script src="backstage/js/topic.js"></script>
@@ -28,22 +27,26 @@
 		</div>
 		<ol class="breadcrumb">
 			<li>
-				<a href="#">Home</a>
+				考试管理
 			</li>
-			<li>
-				<a href="#">Library</a>
-			</li>
-			<li class="active">题目列表</li>
+			<li class="active"><a href="#">试题管理</a></li>
 		</ol>
 		<div class="seach" style="background: #f7f7f9;padding: 10px;">
 			<form class="form-inline">
 				<div class="form-group">
+					<label for="subject_type">科目类型</label>
+					<select class="form-control" id="subject_type">
+					  <option value="">全部</option>
+					</select>
+				</div>&nbsp;
+				<div class="form-group">
 					<label for="exampleInputName2">题目类型</label>
 					<select class="form-control" id="topic_type">
-					  <option value="0">单选</option>
+					  <option value="">全部</option>
+                      <option value="0">单选</option>
 					  <option value="1">多选</option>
 					</select>
-				</div>
+				</div>&nbsp;
 				<div class="form-group">
 					<label for="exampleInputName2">试题名称</label>
 					<input type="text" class="form-control" id="topic_name">
@@ -126,7 +129,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
-							<button type="submit" class="btn btn-primary">
+							<button type="button" class="btn btn-primary submit">
 					提交
 				</button>
 						</div>
@@ -165,104 +168,7 @@
 			<!-- /.modal -->
 		</div>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#defaultForm').bootstrapValidator({
-        message: 'This value is not valid',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            name: {
-                enabled: true,
-                validators: {
-                    notEmpty: {
-                        message: 'The street is required and cannot be empty'
-                    }
-                }
-            },
-            type: {
-                enabled: true,
-                validators: {
-                    notEmpty: {
-                        message: 'The city is required and cannot be empty'
-                    }
-                }
-            },
-            optionA: {
-                enabled: true,
-                validators: {
-                    notEmpty: {
-                        message: 'The country is required and cannot be empty'
-                    }
-                }
-            },
-            optionB: {
-                enabled: false,
-                validators: {
-                    notEmpty: {
-                        message: 'The state is required and cannot be empty'
-                    }
-                }
-            },
-            optionC: {
-                enabled: false,
-                validators: {
-                    notEmpty: {
-                        message: 'The state is required and cannot be empty'
-                    }
-                }
-            },
-            optionD: {
-                enabled: false,
-                validators: {
-                    notEmpty: {
-                        message: 'The state is required and cannot be empty'
-                    }
-                }
-            },
-            optionE: {
-                enabled: false,
-                validators: {
-                    notEmpty: {
-                        message: 'The state is required and cannot be empty'
-                    }
-                }
-            },
-            optionF: {
-                enabled: false,
-                validators: {
-                    notEmpty: {
-                        message: 'The state is required and cannot be empty'
-                    }
-                }
-            }
-        }
-    });
-
-    // Enable street/city/country validators if user want to ship to other address
-    $('input[name="type"]').on('change', function() {
-        var bootstrapValidator = $('#defaultForm').data('bootstrapValidator'),
-            shipNewAddress     = ($(this).val() == '1');//如果是多选
-
-        shipNewAddress ? $('#defaultForm').find('.disabled').removeAttr('disabled')
-                       : $('#defaultForm').find('.disabled').attr('disabled', 'disabled');
  
-        bootstrapValidator.enableFieldValidators('optionB', shipNewAddress)
-                          .enableFieldValidators('optionC', shipNewAddress)
-                          .enableFieldValidators('optionD', shipNewAddress)
-                          .enableFieldValidators('optionE', shipNewAddress)
-                          .enableFieldValidators('optionF', shipNewAddress);
-    });
-
-    /*$('select[name="country"]').on('change', function() {
-        var bootstrapValidator = $('#checkoutForm').data('bootstrapValidator');
-        bootstrapValidator.enableFieldValidators('state', $(this).val() == 'US');
-    });*/
-});
-</script>
 	</body>
 
 </html>

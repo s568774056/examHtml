@@ -1,4 +1,4 @@
-var baseurl = "http://192.168.5.121:7080";
+var baseurl = "http://192.168.165.4:7080";
 //定义Beautifier的构造函数
 var Beautifier = function(ele, opt) {
 	this.$element = ele,
@@ -54,6 +54,7 @@ Beautifier.prototype = {
 		}
 	},
 	getData: function() { //请求数据
+
 		var column_name = this.splitparam(this.options.column_name);
 		var table_body = $(this.$element).find("tbody");
 		$.ajax({
@@ -82,7 +83,15 @@ Beautifier.prototype = {
 						if(i == 0) {
 							html += '  scope="row"';
 						}
-						html += '>' + element[column_name[i]];
+						
+						if(column_name[i].indexOf("Fun") >= 0) {
+
+							var str=eval(column_name[i])(element);
+							html += '>' + str;
+						}else{
+							html += '>' + element[column_name[i]];
+						}
+						
 						if(i == 0) {
 							html += '</th>';
 						} else {
@@ -195,8 +204,8 @@ Beautifier.prototype = {
 	onPageClick: function() {
 
 		var mainThis = this;
-		$(this.$element).on("click", ".page_li a", function() {
-
+		$("#nav_paging").on("click","a",function() {
+			
 			mainThis.options.nowPage = $(this).html();
 			if(mainThis.options.data.page != undefined) {
 				mainThis.options.data.page = ($(this).html() * 1 - 1);
@@ -206,7 +215,7 @@ Beautifier.prototype = {
 			}
 		});
 
-		$(this.$element).on("click", "#nav_paging button", function() {
+		$("#nav_paging button").on("click", function() {
 
 			var value = $($(this).parent("#nav_paging").find("input")).val() * 1;
 			if(value < 1) {
@@ -227,14 +236,17 @@ Beautifier.prototype = {
 			}
 		});
 
-		$(this.$element).on("click", "#nav_paging input", function() {
+		$("#nav_paging input").on("click", function() {
 			$(this).val("");
 		});
 
 		$('#' + this.options.modalId).on('show.bs.modal', function(event) {
+
 			var html = $(event.relatedTarget).text(); // Button that triggered the modal
-			if(html == "添加") {
+			
+			if(html == ""||html == "添加") {
 				mainThis.options.action = 'insert';
+				html="添加";
 			} else {
 				mainThis.options.action = 'update';
 			}
@@ -242,18 +254,23 @@ Beautifier.prototype = {
 		});
 
 		$('#' + this.options.modalId).on('hide.bs.modal', function(event) { //恢复Form状态
-
-			$('#' + mainThis.options.modalId + ' form').data('bootstrapValidator').resetForm(true);
+			try {
+				$('#' + mainThis.options.modalId + ' form').data('bootstrapValidator').resetForm(true);
+			} catch(err) {
+				console.log("[base.js error:]" + err);
+			}
 		});
+
 	},
 	updateParamData: function(param) { //更新请求参数
-		
+
 		this.options.nowPage = 1;
 		this.options.data = $.extend({}, this.options.data, param);
-		this.options.data.page=0;
+		this.options.data.page = 0;
 		//this.options.data = param;
 		this.getData();
 	}
+
 }
 //创建Beautifier对象
 $.fn.myPlugin = function(options) {
