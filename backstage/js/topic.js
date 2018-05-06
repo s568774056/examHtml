@@ -1,10 +1,13 @@
 var update_id = '';
 var deleteId = '';
+var paperObj;
 $(document).ready(function() {
 	getSubject();
+	getPaper();
 	var myPlugin = $('#subject_table').myPlugin({
 		'title_name': 'Id,题目名称,题目类型,选项A,选项B,选项C,选项D,选项E,选项F', //th第一行的表头名称
 		'column_name': 'id,name,typeToStringFun,optionA,optionB,optionC,optionD,optionE,optionF', //字段名
+		'operate': '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal">修改</button><button type="button" class="btn btn-danger btn-sm">删除</button><button type="button" class="btn btn-info btn-sm">关联试卷</button>', //操作内容
 		'url': '/topic/select',
 		'modalId': 'myModal',
 		'data': {
@@ -51,12 +54,19 @@ $(document).ready(function() {
 		$("#defaultForm input[name='optionF']").val($(tr).children().eq(8).html());
 	});
 	//删除
-	$('#subject_table table').on('click', 'tr button:last-child', function() {
+	$('#subject_table table').on('click', 'tr button:nth-child(2)', function() {
 		$('#deleteModal').modal('show');
 		var tr = $(this).parents('tr');
 		$('#deleteModal .modal-body em').html("【" + $(tr).children().eq(1).html() + "】");
 		deleteId = $(tr).children().eq(0).html();
 	});
+	
+	//关联试卷
+	$('#subject_table table').on('click', 'tr button:last-child', function() {
+		update_id=$(this).parents('tr').children().eq(0).html()
+		$('#selectModal').modal('show');
+	});
+
 
 	//确认删除
 	$('#deleteModal button:last-child').on('click', function() {
@@ -111,6 +121,30 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+		//添加/修改
+	$('#selectModal button[type="submit"]').on('click', function() {
+		// Prevent form submission
+		$.ajax({
+			type: "POST",
+			url: baseurl + "/paperTopic/select",
+			data:  "topicId=" + update_id + "&paperId=" + $("#paper").val(),
+			dataType: "json",
+			success: function(result) {
+				if(result.code == 0) {
+					if(result.data.length<=0){
+						addPaper();
+					}else{
+						showMessage('该试题已关联此试卷');
+					}
+				} else {
+					showMessage('查询已关联的试卷失败');
+				}
+			}
+		});
+
+	});
+	
 	$('.seach button').on('click', function() {
 		myPlugin.updateParamData({
 			name: $("#topic_name").val(),
@@ -127,6 +161,29 @@ $(document).ready(function() {
 	});
 });
 
+
+function addPaper(){
+			$.ajax({
+			type: "POST",
+			url: baseurl +  '/paperTopic/add',
+			data: "topicId=" + update_id + "&paperId=" + $("#paper").val(),
+			dataType: "json",
+			success: function(result) {
+				if(result.code == 0) {
+					showMessage('操作成功');
+					$('#selectModal').modal('hide');
+				} else {
+					showMessage('操作失败:' + result.msg);
+				}
+			},
+			error: function(result) {
+				$.each(result, function(key, val) {
+					console.log("error  " + key + "  " + val);
+				});
+				changeDisabled(true);
+			}
+		});
+}
 function changeDisabled(disabled) {
 
 	$("input[name='optionB']").attr('disabled', disabled);
@@ -163,6 +220,24 @@ function getSubject(){
 				$(result.data).each(function(index, element) {
 					
 					$("#subject_type").append("<option value='"+element["id"]+"'>"+element["name"]+"</option>");
+				});
+			},
+			error: function(result) {
+			}
+		});
+}
+
+function getPaper(){
+		$.ajax({
+			type: "POST",
+			url: baseurl + "/paper/findAll",
+			data: "",
+			dataType: "json",
+			success: function(result) {
+				paperObj=result.data;
+				$(result.data).each(function(index, element) {
+					
+					$("#paper").append("<option value='"+element["id"]+"'>"+element["name"]+"</option>");
 				});
 			},
 			error: function(result) {

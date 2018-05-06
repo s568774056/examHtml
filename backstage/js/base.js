@@ -1,4 +1,4 @@
-var baseurl = "http://192.168.165.4:7080";
+var baseurl = "http://192.168.5.103:7080";
 //定义Beautifier的构造函数
 var Beautifier = function(ele, opt) {
 	this.$element = ele,
