@@ -37,8 +37,8 @@
 			<li>
 				考试管理
 			</li>
-			<li class="active"><a href="#">试卷管理</a></li>
-			<li  style="display: none;"><a href="#">关联试题</a></li>
+			<li class="active" name="paperLi"><a href="#">试卷管理</a></li>
+			<li  style="display: none;" name="topicLi"><a href="#">关联试题</a></li>
 		</ol>
 		<div id="paper_div">
 
@@ -67,7 +67,7 @@
 				<form class="form-inline">
 					<div class="form-group">
 						<label for="subject_type">试题名称</label>
-						<input type="text" class="form-control" id="paper_name">
+						<input type="text" class="form-control" id="topic_name">
 					</div>&nbsp;
 					<button type="button" class="btn btn-info">搜索</button>
 				</form>
@@ -172,19 +172,12 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">题目类型：</label>
 									<div class="col-sm-10">
-										<label class="radio-inline" style="padding-left: 20px;">
+										<label class="radio-inline" style="padding-left: 20px;" id="topicType">
 										  
 										</label>
 									</div>
 								</div>
-								
-								<div class="form-group">
-									<label class="col-sm-2 control-label">选项F：</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control disabled" name="optionF" disabled>
-									</div>
-								</div>
-	
+								<div class="optionDiv"></div>
 							</div>
 													
 							<div class="modal-footer">

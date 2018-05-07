@@ -1,7 +1,6 @@
 var update_id = '';
 var deleteId = '';	var paperPlugin ;
 $(document).ready(function() {
-	getSubject();
 	 paperPlugin = $('#paperTopic_table').myPlugin({
 		'title_name': 'Id,题目名称', //th第一行的表头名称
 		'column_name': 'id,name', //字段名
@@ -26,9 +25,23 @@ $(document).ready(function() {
 	});
 	
 	//查看题目
-	$('#paperTopic_table table').on('click', 'tr button:nth-child(2)', function() {
+	$('#paperTopic_table table').on('click', 'tr button:last-child', function() {
+		$('#topicModal').modal('show');
+		var indexTr = $(this).parents('tr').index();
+		var topicObj=paperPlugin.options.selectData[indexTr];console.log(topicObj);
+		console.log("..........................................."+topicObj[name]);
+		$("#topicName").html(topicObj.name);
+		$("#topicType").html(topicObj.name=="0"?"单选":"多选");
 		
+    	$("#topicModal .optionDiv").html("");
+		verdictOption('optiona',topicObj.optiona);
+		verdictOption('optionb',topicObj.optionb);
+		verdictOption('optionc',topicObj.optionc);
+		verdictOption('optiond',topicObj.optiond);
+		verdictOption('optione',topicObj.optione);
+		verdictOption('optionf',topicObj.optionf);
 	});
+
 
 	//确认删除
 	$('#deleteModal button:last-child').on('click', function() {
@@ -78,6 +91,13 @@ $(document).ready(function() {
 			}
 		});
 	})
+	
+	
+	$('.paperTopicSeach button').on('click', function() {
+		paperPlugin.updateParamData({
+			name: $("#topic_name").val()
+		});
+	});
 
 });
 	function selectTopic(){
@@ -86,3 +106,40 @@ $(document).ready(function() {
 			paperId:update_id
 		});
 	}
+	
+function verdictOption(opName,data){
+	if(data==''){
+		return;
+	}
+	var html='<div class="form-group"><label class="col-sm-2 control-label">'+switc(opName)+'</label><div class="col-sm-10"><label class="radio-inline" style="padding-left: 20px;" >'+data+'</label></div></div>';
+	
+	$("#topicModal .optionDiv").append(html);
+}
+
+function switc(opName){
+var html='';
+console.log(opName);
+switch(opName) {
+	case 'optiona':
+		html = '选项A:';
+		break;
+	case 'optionb':
+		html = '选项B:';
+		break;
+	case 'optionc':
+		html = '选项C:';
+		break;
+	case 'optiond':
+		html = '选项D:';
+		break;
+	case 'optione':
+		html = '选项E:';
+		break;
+	case 'optionf':
+		html = '选项F:';
+		break;
+	default:
+		break;
+}
+	return html;
+}

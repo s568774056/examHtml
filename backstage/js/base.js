@@ -1,4 +1,4 @@
-var baseurl = "http://192.168.5.103:7080";
+var baseurl = "http://192.168.165.4:7080";
 //定义Beautifier的构造函数
 var Beautifier = function(ele, opt) {
 	this.$element = ele,
@@ -18,6 +18,7 @@ var Beautifier = function(ele, opt) {
 			'nowPage': 1, //当前页 不传
 			'modalId': '', //模态框Id  填写模态框Id后可根据按钮文本内容修改模态框标题
 			'action': 'update', //提交动作 insert/update
+			'selectData':{}
 		},
 		this.options = $.extend({}, this.defaults, opt)
 	if(this.options.data.size != undefined) {
@@ -66,6 +67,7 @@ Beautifier.prototype = {
 				if(result.code != 0) {
 					return;
 				}
+				this.options.selectData= result.data;
 				var data = result.data;
 				this.options.totalCount = result.totalCount;
 				this.pagination();

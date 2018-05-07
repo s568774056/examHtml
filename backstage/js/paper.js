@@ -102,6 +102,19 @@ $(document).ready(function() {
 			subjectId: $("#subject_type").val()
 		});
 	});
+	
+	$("li[name='paperLi']").on('click', function() {
+		$("#paper_div").show();
+		$("#paperTopic_div").hide();
+		$(".breadcrumb li:eq(2)").removeClass("active");
+		$(".breadcrumb li:eq(1)").addClass("active").show();
+	});
+	$("li[name='topicLi']").on('click', function() {
+		$("#paperTopic_div").show();
+		$("#paper_div").hide();
+		$(".breadcrumb li:eq(1)").removeClass("active");
+		$(".breadcrumb li:eq(2)").addClass("active").show();
+	});
 });
 
 

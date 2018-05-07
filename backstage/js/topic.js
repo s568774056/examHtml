@@ -97,10 +97,11 @@ $(document).ready(function() {
 		} else {
 			post_url = '/topic/update/' + update_id;
 		}
+		 
 		$.ajax({
 			type: "POST",
 			url: baseurl + post_url,
-			data: $("#defaultForm").serialize() + "&subjectId=" + $("#subject_type").val() + "&id=" + update_id,
+			data: $("#defaultForm").serialize() + "&subjectId=" + $("#subject_type").val() + "&type=" + $("input[name='inlineRadio']:checked").val()+ "&id=" + update_id,
 			dataType: "json",
 			success: function(result) {
 				if(result.code == 0) {
