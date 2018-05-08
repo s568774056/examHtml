@@ -124,7 +124,9 @@ $(document).ready(function() {
 			subjectId: $("#subject_type").val()
 		});
 	});
-	$('input[name="type"]').on('change', function() {
+	
+	//改变试题类型
+	$('input[name="inlineRadio"]').on('change', function() {
 
 		var disabled = $(this).attr("id"); //如果是多选
 
