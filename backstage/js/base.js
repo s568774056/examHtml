@@ -8,7 +8,7 @@ var Beautifier = function(ele, opt) {
 			'title_name': '', //th第一行的表头名称
 			'size': '10', //每页行数
 			'data': {}, //请求参数
-			'table_id': '', //自定义 table的id
+			'table_id': ' ', //自定义 table的id
 			'is_add': true, //是否显示添加按钮
 			'is_operate': true, //是否显示操作 默认为true
 			'operate': '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal">修改</button><button type="button" class="btn btn-danger btn-sm">删除</button>', //操作内容
@@ -127,7 +127,9 @@ Beautifier.prototype = {
 		var nowPage = this.options.nowPage * 1;
 		var totalCount = this.options.totalCount * 1;
 		var pageSize = Math.ceil(totalCount / this.options.size);
-		var nav_ul = $(this.$element).find("#nav_paging ul");
+		var mainThis = this;
+		var nav_paging=$(this.$element).find("#nav_paging");
+		var nav_ul = $(nav_paging).find("ul");
 		var page_li = $(this.$element).find(".page_li a");
 		if(page_li.html() != undefined) {
 			startPage = $(page_li).first().html() * 1;
@@ -177,7 +179,7 @@ Beautifier.prototype = {
 		} else { //初次生成
 			nowPage = 1;
 		}
-		$(this.$element).find("#nav_paging").show().find("bdi").html("共" + pageSize + "页");
+		$(nav_paging).show().find("bdi").html("共" + pageSize + "页");
 		var html = '';
 		if(pageSize > 5) {
 			endPage = startPage + 4;
@@ -206,7 +208,8 @@ Beautifier.prototype = {
 	onPageClick: function() {
 
 		var mainThis = this;
-		$("#nav_paging").on("click","a",function() {
+		var nav_paging=$(this.$element).find("#nav_paging");
+		$(nav_paging).on("click","a",function() {
 			
 			mainThis.options.nowPage = $(this).html();
 			if(mainThis.options.data.page != undefined) {
@@ -217,9 +220,9 @@ Beautifier.prototype = {
 			}
 		});
 
-		$("#nav_paging button").on("click", function() {
+		$(nav_paging).find("button").on("click", function() {
 
-			var value = $($(this).parent("#nav_paging").find("input")).val() * 1;
+			var value = $($(nav_paging).find("input")).val() * 1;
 			if(value < 1) {
 				return;
 			}
@@ -238,7 +241,7 @@ Beautifier.prototype = {
 			}
 		});
 
-		$("#nav_paging input").on("click", function() {
+		$(nav_paging).find("input").on("click", function() {
 			$(this).val("");
 		});
 

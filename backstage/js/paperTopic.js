@@ -1,12 +1,25 @@
 var update_id = '';
-var deleteId = '';	var paperPlugin ;
+var deleteId = '';	var paperPlugin,topicPlugin,paperId;
 $(document).ready(function() {
 	 paperPlugin = $('#paperTopic_table').myPlugin({
 		'title_name': 'Id,题目名称', //th第一行的表头名称
 		'column_name': 'id,name', //字段名
 		'url': '/paperTopic/select',
 		'operate': '<button type="button" class="btn btn-danger btn-sm">删除</button><button type="button" class="btn btn-info btn-sm">查看题目</button>', //操作内容
-		'modalId': 'topicModal',
+		'modalId': 'topicLiModal',
+		'data': {
+			page: 0,
+			size: 3
+		}, //请求参数
+	});
+
+	//查询试题
+	topicPlugin = $('#topicDiv').myPlugin({
+		'title_name': 'Id,题目名称', //th第一行的表头名称
+		'column_name': 'id,name', //字段名
+		'url': '/paperTopic/selectTopic',
+		'operate': '<button type="button" class="btn btn-danger btn-sm">添加</button>', //操作内容
+		'modalId': 'topicLiModal',
 		'is_add': false,
 		'data': {
 			page: 0,
@@ -18,9 +31,9 @@ $(document).ready(function() {
 	//删除
 	$('#paperTopic_table table').on('click', 'tr button:first-child', function() {
 
-		$('#deleteModal').modal('show');
+		$('#deModal').modal('show');
 		var tr = $(this).parents('tr');
-		$('#deleteModal .modal-body em').html("【" + $(tr).children().eq(1).html() + "】");
+		$('#deModal .modal-body em').html("【" + $(tr).children().eq(1).html() + "】");
 		deleteId = $(tr).children().eq(0).html();
 	});
 	
@@ -44,7 +57,7 @@ $(document).ready(function() {
 
 
 	//确认删除
-	$('#deleteModal button:last-child').on('click', function() {
+	$('#deModal button:last-child').on('click', function() {
 		$.ajax({
 			type: "POST",
 			url: baseurl + "/paperTopic/delete/" + deleteId,
@@ -54,8 +67,8 @@ $(document).ready(function() {
 				console.log(result.code + '   ' + (result.code == 0));
 				if(result.code == 0) {
 					showMessage('删除成功');
-					$('#deleteModal').modal('hide');
-					myPlugin.getData();
+					$('#deModal').modal('hide');
+					paperPlugin.getData();
 				} else {
 					showMessage('删除失败:【<a style="color:red">' + result.msg + "</a>】");
 				}
@@ -93,17 +106,44 @@ $(document).ready(function() {
 	})
 	
 	
+	
 	$('.paperTopicSeach button').on('click', function() {
 		paperPlugin.updateParamData({
-			name: $("#topic_name").val()
+			name: $("#topic_name").val(),
+			paperId:paperId
 		});
+	});
+	
+	$('.topicSeach button').on('click', function() {
+		topicPlugin.updateParamData({
+			name: $("#toName").val(),
+			subjectId:$("#su_type").val(),
+			paperId:paperId
+		});
+	});
+	
+	$('#paperTopic_table #addTb').on('click', function() {
+
+		topicPlugin.updateParamData({
+			name: $("#toName").val(),
+			subjectId:$("#su_type").val(),
+			paperId:paperId
+		});
+	});
+	
+	
+	
+	$('#topicLiModal table').on('click', 'tr button', function() {
+
+		var topicId =$(this).parents('tr').children().eq(0).html();
+		addPaper(topicId,$(this).parents('tr'));
 	});
 
 });
 	function selectTopic(){
 		paperPlugin.updateParamData({
 			name: $("#paper_name").val(),
-			paperId:update_id
+			paperId:paperId
 		});
 	}
 	
@@ -142,4 +182,29 @@ switch(opName) {
 		break;
 }
 	return html;
+}
+
+
+
+function addPaper(topicId,obj){
+			$.ajax({
+			type: "POST",
+			url: baseurl +  '/paperTopic/add',
+			data: "topicId=" + topicId + "&paperId=" +paperId,
+			dataType: "json",
+			success: function(result) {
+				if(result.code == 0) {
+					showMessage('操作成功');
+					$(obj).remove();
+				} else {
+					showMessage('操作失败:' + result.msg);
+				}
+			},
+			error: function(result) {
+				$.each(result, function(key, val) {
+					console.log("error  " + key + "  " + val);
+				});
+				changeDisabled(true);
+			}
+		});
 }

@@ -36,7 +36,7 @@ $(document).ready(function() {
 		
 		$(".breadcrumb li:eq(1)").removeClass("active");
 		$(".breadcrumb li:eq(2)").addClass("active").show();
-		update_id = $(this).parents('tr').children().eq(0).html();
+		paperId = $(this).parents('tr').children().eq(0).html();
 		$("#paper_div").hide();
 		selectTopic();
 		$("#paperTopic_div").show();
@@ -138,6 +138,7 @@ function getSubject(){
 				$(result.data).each(function(index, element) {
 					
 					$("select[name='subject_type']").append("<option value='"+element["id"]+"'>"+element["name"]+"</option>");
+					
 				});
 			},
 			error: function(result) {

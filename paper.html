@@ -46,12 +46,12 @@
 				<form class="form-inline">
 					<div class="form-group">
 						<label for="subject_type">科目类型</label>
-						<select class="form-control" name="subject_type">
+						<select class="form-control" name="subject_type" id="subject_type">
 							<option value="">全部</option>
 						</select>
 					</div>&nbsp;
 					<div class="form-group">
-						<label for="subject_type">试卷名称</label>
+						<label for="paper_name">试卷名称</label>
 						<input type="text" class="form-control" id="paper_name">
 					</div>&nbsp;
 					<button type="button" class="btn btn-info">搜索</button>
@@ -66,7 +66,7 @@
 			<div class="paperTopicSeach" style="background: #f7f7f9;padding: 10px;">
 				<form class="form-inline">
 					<div class="form-group">
-						<label for="subject_type">试题名称</label>
+						<label for="topic_name">试题名称</label>
 						<input type="text" class="form-control" id="topic_name">
 					</div>&nbsp;
 					<button type="button" class="btn btn-info">搜索</button>
@@ -147,6 +147,33 @@
 			<!-- /.modal -->
 		</div>
 
+
+		<div class="modal fade" id="deModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+								<h4 class="modal-title" id="myModalLabel">删除数据
+							
+						</h4>
+							</div>
+							<div class="modal-body">
+								确定删除<em style="color: red;">数据</em >？
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+								<button type="submit" class="btn btn-primary">
+							提交
+						</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
 	<!---->
 		<div class="modal fade" id="topicModal">
 					<form class="form-horizontal" id="defaultForm">
@@ -192,6 +219,54 @@
 				</div>
 	<!---->
  
+ 
+ <!--试题列表-->
+			 	<div class="modal fade" id="topicLiModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+									<h4 class="modal-title">添加题目
+								
+							</h4>
+								</div>
+								<div class="modal-body">
+									 <!--body-->
+									 
+									 <div class="topicSeach" style="background: #f7f7f9;padding: 10px;">
+										<form class="form-inline">
+											<div class="form-group">
+												<label for="toName">试题名称</label>
+												<input type="text" class="form-control" id="toName">
+											</div>&nbsp;
+											<div class="form-group">
+												<label for="su_type">科目名称</label>
+												<select class="form-control" name="subject_type" id="su_type">
+													<option value="">全部</option>
+												</select>
+											</div>&nbsp;
+											
+											<button type="button" class="btn btn-info">搜索</button>
+										</form>
+									</div>
+									 
+									<div class="table-responsive" id="topicDiv">
+									</div>
+									 
+									 <!--..body-->
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal -->
+					</div>
+ <!--。。试题列表-->
 	</body>
 
 </html>
