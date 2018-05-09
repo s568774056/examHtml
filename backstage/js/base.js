@@ -107,6 +107,12 @@ Beautifier.prototype = {
 					$(table_body).append(html);
 					$(table_body).find("button").attr('data-target', '#' + modalId);
 				});
+				if(data==""){
+					$(table_body).append("暂无数据");
+					$(this.$element).find("#nav_paging").hide();
+				}else{
+					$(this.$element).find("#nav_paging").show();
+				}
 			}.bind(this),
 			error: function(jqXHR) {
 
