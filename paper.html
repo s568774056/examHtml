@@ -14,6 +14,8 @@
 		<!-- BASE STYLES END-->
 		<script src="backstage/js/paper.js"></script>
 		<script src="backstage/js/paperTopic.js"></script>
+		<script src="backstage/js/paperUser.js"></script>
+		
 		
 		<style>
 			.modal label {
@@ -39,6 +41,7 @@
 			</li>
 			<li class="active" name="paperLi"><a href="#">试卷管理</a></li>
 			<li  style="display: none;" name="topicLi"><a href="#">关联试题</a></li>
+			<li  style="display: none;" name="userLi"><a href="#">关联用户</a></li>
 		</ol>
 		<div id="paper_div">
 
@@ -60,7 +63,7 @@
 			<div id="paper_table"></div>
 		</div>
 		
-		<!---->
+		<!--关联题目-->
 		<div id="paperTopic_div" style="display: none;">
 		
 			<div class="paperTopicSeach" style="background: #f7f7f9;padding: 10px;">
@@ -68,13 +71,36 @@
 					<div class="form-group">
 						<label for="topic_name">试题名称</label>
 						<input type="text" class="form-control" id="topic_name">
+					</div>&nbsp;<div class="form-group">
+						<label for="topic_name">试题名称</label> 
+						<select class="form-control" name="subject_type" id="topic_subject"><option value="">全部</option>
+									</select>
 					</div>&nbsp;
 					<button type="button" class="btn btn-info">搜索</button>
 				</form>
 			</div>
 			<div id="paperTopic_table"></div>
 		</div>
+		<!--关联题目-->
+		
+		<!--关联用户-->
+			<!---->
+		<div id="paperUser_div" style="display: none;">
+		
+			<div class="paperUserSeach" style="background: #f7f7f9;padding: 10px;">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="topic_name">用户名称</label>
+						<input type="text" class="form-control" id="paper_user_name">
+					</div>&nbsp;
+					<button type="button" class="btn btn-info">搜索</button>
+				</form>
+			</div>
+			<div id="paperUser_table"></div>
+		</div>
 		<!---->
+		
+		<!--关联用户-->
 		
 		<!-- 模态框（Modal） -->
 		<div class="modal fade" id="myModal">
@@ -149,6 +175,34 @@
 
 
 		<div class="modal fade" id="deModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+								<h4 class="modal-title" id="myModalLabel">删除数据
+							
+						</h4>
+							</div>
+							<div class="modal-body">
+								确定删除<em style="color: red;">数据</em >？
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+								<button type="submit" class="btn btn-primary">
+							提交
+						</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+				
+				
+		<div class="modal fade" id="deUserModal">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -267,6 +321,50 @@
 						<!-- /.modal -->
 					</div>
  <!--。。试题列表-->
+	
+
+ <!--用户列表-->
+			 	<div class="modal fade" id="userLiModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+									<h4 class="modal-title">添加用户
+								
+							</h4>
+								</div>
+								<div class="modal-body">
+									 <!--body-->
+									 
+									 <div class="userSeach" style="background: #f7f7f9;padding: 10px;">
+										<form class="form-inline">
+											<div class="form-group">
+												<label for="toName">用户名</label>
+												<input type="text" class="form-control" id="userName">
+											</div>&nbsp;
+											
+											<button type="button" class="btn btn-info">搜索</button>
+										</form>
+									</div>
+									 
+									<div class="table-responsive" id="userDiv">
+									</div>
+									 
+									 <!--..body-->
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal -->
+					</div>
+ <!--。。用户列表-->
+	
 	</body>
 
 </html>

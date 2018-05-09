@@ -7,10 +7,10 @@ $(document).ready(function() {
 		'column_name': 'id,subName,name,create_date', //字段名
 		'url': '/paper/select',
 		'modalId': 'myModal',
-		'operate': '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal">修改</button><button type="button" class="btn btn-danger btn-sm">删除</button><button type="button" class="btn btn-info btn-sm">关联题目</button>', //操作内容
+		'operate': '<button type="button" class="btn btn-warning btn-sm" data-toggle="modal">修改</button><button type="button" class="btn btn-danger btn-sm">删除</button><button type="button" class="btn btn-info btn-sm">关联题目</button><button type="button" class="btn btn-info btn-sm">关联用户</button>', //操作内容
 		'data': {
 			page: 0,
-			size: 3
+			size: 10
 		}, //请求参数
 	});
  
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		deleteId = $(tr).children().eq(0).html();
 	});
 	//关联题目
-	 $('#paper_table table').on('click', 'tr button:last-child', function() {
+	 $('#paper_table table').on('click', 'tr button:nth-child(3)', function() {
 		
 		$(".breadcrumb li:eq(1)").removeClass("active");
 		$(".breadcrumb li:eq(2)").addClass("active").show();
@@ -40,7 +40,17 @@ $(document).ready(function() {
 		$("#paper_div").hide();
 		selectTopic();
 		$("#paperTopic_div").show();
+	 });
+	 //关联用户
+	  $('#paper_table table').on('click', 'tr button:nth-child(4)', function() {
 		
+		$(".breadcrumb li:eq(1)").removeClass("active");
+		$(".breadcrumb li:eq(2)").removeClass("active");
+		$(".breadcrumb li:eq(3)").addClass("active").show();
+		paperId = $(this).parents('tr').children().eq(0).html();
+		$("#paper_div").hide();
+		selectUser();
+		$("#paperUser_div").show();
 	 });
 
 	//确认删除
@@ -104,17 +114,31 @@ $(document).ready(function() {
 	});
 	
 	$("li[name='paperLi']").on('click', function() {
+		$("#paperUser_div").hide();
 		$("#paper_div").show();
 		$("#paperTopic_div").hide();
-		$(".breadcrumb li:eq(2)").removeClass("active");
+		$(".breadcrumb li:eq(2)").removeClass("active").hide();
+		$(".breadcrumb li:eq(3)").removeClass("active").hide();
 		$(".breadcrumb li:eq(1)").addClass("active").show();
 	});
 	$("li[name='topicLi']").on('click', function() {
-		$("#paperTopic_div").show();
+		$("#paperUser_div").hide();
 		$("#paper_div").hide();
+		$("#paperTopic_div").show();
 		$(".breadcrumb li:eq(1)").removeClass("active");
 		$(".breadcrumb li:eq(2)").addClass("active").show();
+		$(".breadcrumb li:eq(3)").removeClass("active");
 	});
+	$("li[name='userLi']").on('click', function() {
+		$("#paperUser_div").show();
+		$("#paper_div").hide();
+		$("#paperTopic_div").hide();
+		$(".breadcrumb li:eq(1)").removeClass("active");
+		$(".breadcrumb li:eq(2)").removeClass("active");
+		$(".breadcrumb li:eq(3)").addClass("active").show();
+	});
+	
+	
 });
 
 

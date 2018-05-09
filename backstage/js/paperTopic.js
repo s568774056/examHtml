@@ -9,7 +9,7 @@ $(document).ready(function() {
 		'modalId': 'topicLiModal',
 		'data': {
 			page: 0,
-			size: 3
+			size: 10
 		}, //请求参数
 	});
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		'is_add': false,
 		'data': {
 			page: 0,
-			size: 3
+			size: 10
 		}, //请求参数
 	});
  
@@ -76,42 +76,8 @@ $(document).ready(function() {
 		});
 	});
 
-	//添加/修改
-	$('#myModal button[class="btn btn-primary submit"]').on('click', function() {
-		// Prevent form submission
-		var post_url = '/paperTopic/add';
-		
-		$.ajax({
-			type: "POST",
-			url: baseurl + post_url,
-			data: $("#defaultForm").serialize() + "&subjectId=" + $("#myModal select").val() + "&id=" + update_id,
-			dataType: "json",
-			success: function(result) {
-				if(result.code == 0) {
-					showMessage('操作成功');
-					myPlugin.getData();
-					$('#myModal').modal('hide');
-					$("#defaultForm")[0].reset();
-					changeDisabled(true);
-				} else {
-					showMessage('操作失败:' + result.msg);
-				}
-			},
-			error: function(result) {
-				$.each(result, function(key, val) {
-					console.log("error  " + key + "  " + val);
-				});
-			}
-		});
-	})
-	
-	
-	
 	$('.paperTopicSeach button').on('click', function() {
-		paperPlugin.updateParamData({
-			name: $("#topic_name").val(),
-			paperId:paperId
-		});
+		selectTopic();
 	});
 	
 	$('.topicSeach button').on('click', function() {
@@ -142,7 +108,8 @@ $(document).ready(function() {
 });
 	function selectTopic(){
 		paperPlugin.updateParamData({
-			name: $("#paper_name").val(),
+			name: $("#topic_name").val(),
+			subjectId:$("#topic_subject").val(),
 			paperId:paperId
 		});
 	}

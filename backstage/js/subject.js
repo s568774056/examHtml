@@ -8,7 +8,7 @@ $(document).ready(function() {
 		'modalId': 'myModal',
 		'data': {
 			page: 0,
-			size: 3
+			size: 10
 		}, //请求参数
 	});
 
